@@ -71,3 +71,9 @@ def test_case_4B_Linux(est):
 def test_case_4c(est,val,expected):
     assert est.processar_carga_insumo(val) == expected
 
+def test_File_Error(est):
+    est.logger.caminho_arquivo = "\\FakeFolder\\estufa_status.log"
+    msg = "Test_MSG Windows"
+    with pytest.raises(RuntimeError):
+        est.registrar_log(msg)
+
