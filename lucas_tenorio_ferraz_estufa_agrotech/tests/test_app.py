@@ -15,8 +15,7 @@ def test_verificar_status_temperatura(est,temp, expected):
     
 @pytest.mark.parametrize("preço, vip, expected",
                          [(-10,"ValueError",9),(10.879,False,10.88),(9.4949,False,9.49),
-                          (20,True,16),(111.1111,True,88.89),(55.5555,True,44.44)]
-                          )#,ids=[f"{i}" for i in [40,50,-10,0,20]])
+                          (20,True,16),(111.1111,True,88.89),(55.5555,True,44.44)])
 def test_calcular_preco_insumo(est,preço,vip,expected):
     #case 2A,2B?,3A,3B
     if preço<0:
@@ -24,13 +23,8 @@ def test_calcular_preco_insumo(est,preço,vip,expected):
             est.calcular_preco_insumo(preço,vip)
     else: 
         assert expected == est.calcular_preco_insumo(preço,vip)
-@pytest.mark.parametrize("val, expected",
-                         [(5000.0001,False),
-                          (5000,True),
-                          (-5555,True),
-                          (4444,True),
-                          (111.1111,True)]
-                          )
+@pytest.mark.parametrize("val, expected",[(5000.0001,False),(5000,True),(-5555,True),
+                                          (4444,True),(111.1111,True)])
 def test_processar_carga_insumo(est,val,expected):
     #case 2B?,3B
     if expected:
@@ -65,11 +59,8 @@ def test_case_4B_Linux(est):
 
 
 @pytest.mark.xfail(reason="Strings onde deveria ser numero")
-@pytest.mark.parametrize("val, expected",
-                         [("A",False)]
-                          )
-def test_case_4c(est,val,expected):
-    assert est.processar_carga_insumo(val) == expected
+def test_case_4c(est):
+    assert est.processar_carga_insumo("AAAA") == 11
 
 def test_File_Error(est):
     est.logger.caminho_arquivo = "\\FakeFolder\\estufa_status.log"
