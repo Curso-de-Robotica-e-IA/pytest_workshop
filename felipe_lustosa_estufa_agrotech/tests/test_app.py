@@ -73,7 +73,6 @@ def test_registrar_log(estufa):
 
 def test_registrar_log_exception(estufa):
    with pytest.raises(RuntimeError):
-      # monkeypatch.setattr(estufa, "logger.caminho_arquivo", None)
       estufa.logger.caminho_arquivo = None
       estufa.registrar_log("teste")
 
