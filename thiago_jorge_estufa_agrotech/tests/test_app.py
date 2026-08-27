@@ -55,7 +55,7 @@ def test_preco_incorreto_fail(estufa):
     assert estufa.processar_carga_insumo(-2e308) == True
 
 @pytest.mark.skipif(
-    sys.platform != "linux",
+    sys.platform == "linux",
     reason="Só irá rodar no linux"
 )
 def test_apenas_linux(estufa):
