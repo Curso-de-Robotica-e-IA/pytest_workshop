@@ -111,3 +111,5 @@ def test_deposit_module(create_bank_acc, deposit_value, expected_outcome, _shoul
 
 def test_get_bank_balance(create_bank_acc):
     assert create_bank_acc.saldo == create_bank_acc._saldo
+
+
