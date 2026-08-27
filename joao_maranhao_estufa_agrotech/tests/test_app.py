@@ -84,5 +84,5 @@ def teste_apenas_no_linux():
 
 # 4 C
 @pytest.mark.xfail(reason="String ao invés de número")
-def teste_(mock):
+def teste_input_processar_carga_insumo(mock):
     assert mock.processar_carga_insumo("12") == 12
