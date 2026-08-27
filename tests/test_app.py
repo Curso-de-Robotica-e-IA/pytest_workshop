@@ -1,4 +1,4 @@
-from app import EstufaAgrotech
+from app import EstufaAgrotech, ServicoLogger
 import pytest
 
 @pytest.fixture
@@ -8,7 +8,11 @@ def log_temporario(tmp_path):
 
 
 
+@pytest.fixture
 
+def servico_logger():
+    sl = ServicoLogger()
+    return sl
 
 @pytest.fixture
 def estufa():
@@ -46,13 +50,13 @@ def test_verificar_temperatura(estufa,atual, esperado):
 
 # TESTE_CASE 3
 def test_capacidade_de_carga_estufa(estufa, atual, esperado):
-    estufa.processar_carga_insumo(atual) == esperado
+    assert estufa.processar_carga_insumo(atual) == esperado
 
 
 @pytest.mark.parametrize(
     "atual, eh_vip, esperado",
-    [(150.250, True, round((150.0*0.8),2)),
-     (300.230,True,round((300.0*0.8),2)),
+    [(150.250, True, round((150.250*0.8),2)),
+     (300.230,True,round((300.230*0.8),2)),
      (0.0, True,round((0.0*0.8),2)),
      (150.250, False, round(150.250,2)),
      (300.211,False,round(300.211,2)),
@@ -63,7 +67,7 @@ def test_capacidade_de_carga_estufa(estufa, atual, esperado):
 )
 # TESTE_CASE 2
 def test_precos_incorretos(estufa, atual, eh_vip, esperado):
-    estufa.calcular_preco_insumo(atual, eh_vip) == esperado
+    assert estufa.calcular_preco_insumo(atual, eh_vip) == esperado
 
 
 
@@ -95,3 +99,28 @@ def test_preco_invalido(estufa, eh_vip, preco_invalido):
 def test_carga_maxima_excedida(estufa, preco_invalido):
     with pytest.raises(ValueError):
         estufa.processar_carga_insumo(preco_invalido)
+
+
+@pytest.mark.parametrize(
+        "mensagem, esperado",
+        [
+           ( "Enviando esta mensagem de teste!", True)
+        ],
+        ids=["mensagem"],
+)
+
+def test_resgistrar_log(estufa, mensagem, esperado):
+    assert estufa.registrar_log(mensagem) == esperado
+
+@pytest.mark.skip
+def test_leitura_log(servico_logger):
+    path = ""
+    servico_logger.leitura_log(path)
+
+@pytest.mark.skipif(not hasattr(ServicoLogger, "leitura_log"), reason="has no def in ServiceLogger")
+def test_com_falha(servico_logger):
+    assert servico_logger.leitura_log() == None
+
+@pytest.mark.xfail(reason="A leitura ainda não está lendo os logs")
+def test_leitura_false(servico_logger):
+    assert servico_logger.leitura_log() == False

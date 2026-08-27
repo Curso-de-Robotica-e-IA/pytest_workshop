@@ -16,7 +16,10 @@ class ServicoLogger:
         except Exception as e:
             raise RuntimeError(f"Erro ao gravar log: {e}")
 
-
+    def leitura_log(self):
+            pass
+    
+  
 class EstufaAgrotech:
     """Gerenciador central da estufa (temperatura, logs e regras de precificação)."""
 
@@ -54,3 +57,6 @@ class EstufaAgrotech:
     def registrar_log(self, mensagem: str) -> bool:
         """Envia mensagem de log usando o serviço configurado."""
         return self.logger.logar_operacao(mensagem)
+
+
+    
