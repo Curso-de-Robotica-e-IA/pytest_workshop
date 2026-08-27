@@ -8,6 +8,8 @@ packages = [{include = "ygor_matos_estufa_agrotech", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+requests = "^2.34.2"
+pytest-mock = "^3.15.1"
 
 
 [tool.poetry.group.dev.dependencies]
