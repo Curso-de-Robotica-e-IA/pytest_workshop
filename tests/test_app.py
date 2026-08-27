@@ -1,6 +1,7 @@
 import pytest
 #from src.matheus_passos_estufa_agrotech.app import *
 import sys
+from src.matheus_passos_estufa_agrotech.banco import SaldoInsuficienteError, ValorInvalidoError
 
 
 @pytest.mark.parametrize(
@@ -88,3 +89,25 @@ def test_known_error():
 @pytest.mark.skipif(not sys.platform.startswith('linux'), reason= "This test is for linux only.")
 def test_run_only_on_linux():
     assert True == True
+
+
+#==========================================================================================#
+#TESTS FOR BANK APP. REASON : There was a problem where the conftest was not being recognized.
+@pytest.mark.parametrize(
+        "deposit_value, expected_outcome,_should_raise_error",
+        [
+            (100, 150,False),
+            (-50.0, 50 ,True),
+            (0.0, 50,True)
+        ],
+        )
+def test_deposit_module(create_bank_acc, deposit_value, expected_outcome, _should_raise_error): #Tests the deposit method.
+    if _should_raise_error:
+        with pytest.raises(ValorInvalidoError):
+            create_bank_acc.depositar(deposit_value)
+    else:
+        assert create_bank_acc.depositar(deposit_value) == expected_outcome
+
+
+def test_get_bank_balance(create_bank_acc):
+    assert create_bank_acc.saldo == create_bank_acc._saldo

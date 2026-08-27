@@ -15,4 +15,6 @@ def create_agrotech():
 
 @pytest.fixture
 def create_bank_acc():
-    return ContaBancaria()
+    #Creates a bank acc using default values.
+    bank_acc = ContaBancaria("acc_owner", 50.0)
+    return bank_acc
