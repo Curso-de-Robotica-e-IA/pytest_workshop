@@ -1,7 +1,7 @@
 import pytest
 #from src.matheus_passos_estufa_agrotech.app import *
 import sys
-from src.matheus_passos_estufa_agrotech.banco import SaldoInsuficienteError, ValorInvalidoError
+from src.matheus_passos_estufa_agrotech.banco import *
 
 
 @pytest.mark.parametrize(
@@ -112,4 +112,82 @@ def test_deposit_module(create_bank_acc, deposit_value, expected_outcome, _shoul
 def test_get_bank_balance(create_bank_acc):
     assert create_bank_acc.saldo == create_bank_acc._saldo
 
+
+
+@pytest.mark.parametrize(
+        "withdraw_value, expected_outcome, _should_give_error_invalid_value, _should_give_error_not_enough_funds",
+        [
+            (0.0, 100, True, False), #Tests error for invalid withdraw values
+            (-100.0, 100.0, True, False), 
+
+            (50.0, 0.0, False, False), #Tests normal operation
+            (500.0, 100.0, False, True) #Test : Not enough funds
+        ],
+        )
+def test_withdraw_from_account(create_bank_acc, withdraw_value, 
+                               expected_outcome, _should_give_error_invalid_value, 
+                               _should_give_error_not_enough_funds):
+    
+    if _should_give_error_not_enough_funds:
+        with pytest.raises(SaldoInsuficienteError):
+            create_bank_acc.sacar(withdraw_value)
+    elif _should_give_error_invalid_value:
+        with pytest.raises(ValorInvalidoError):
+            create_bank_acc.sacar(withdraw_value)
+    else:
+        assert create_bank_acc.sacar(withdraw_value) == expected_outcome
+
+
+
+def test_transfer_between_accounts():
+    #Since the withdraw and deposit are tested previously...
+    #Note : The method itself should check if there was an error when trying to withdraw first.
+    #since it can fail in the withdrawn, but still deposit.
+    sender = ContaBancaria("Sender", 500.0)
+    receiver = ContaBancaria("Receiver", 100.0)
+
+    sender.transferir(receiver, 200)
+
+    assert sender.saldo == 300.0 and receiver.saldo == 300.0
+
+
+
+@pytest.mark.parametrize(
+        "value_a, value_b, expected_outcome",
+        [
+            (10, 2 , 5),
+            (10, 0.5, 20),
+            (0.0, 100, 0),
+            (-100, 2, -50),
+            (100, 0, None),
+            (-100, 0, None)
+        ],
+        )
+def test_divide_method(value_a, value_b, expected_outcome):
+    if expected_outcome != None:
+        assert dividir(value_a, value_b) == expected_outcome
+    else:
+        with pytest.raises(ZeroDivisionError):
+            dividir(value_a, value_b)
+
+
+
+@pytest.mark.parametrize(
+        "base_value, percent, expected",
+        [
+            (10, 20 , 8),
+            (0, 20, 0),
+            (100, 100, 0),
+            #(), #if base value is negative, the code allows it.
+            (100, -20, None),
+            (100, 0, 100),
+        ],
+        )
+def test_discount_calculation(base_value, percent, expected):
+    if expected != None:
+        assert calcular_desconto(base_value, percent) == expected
+    else:
+        with pytest.raises(ValorInvalidoError):
+            calcular_desconto(base_value, percent)
+        
 
