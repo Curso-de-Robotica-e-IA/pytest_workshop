@@ -1,5 +1,6 @@
 import pytest
 from src.matheus_passos_estufa_agrotech.app import *
+from src.matheus_passos_estufa_agrotech.banco import *
 
 @pytest.fixture
 def log_temporario(tmp_path):
@@ -11,3 +12,7 @@ def log_temporario(tmp_path):
 def create_agrotech():
     return EstufaAgrotech() #Uses default values
 
+
+@pytest.fixture
+def create_bank_acc():
+    return ContaBancaria()

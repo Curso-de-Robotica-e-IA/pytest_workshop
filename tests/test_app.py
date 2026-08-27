@@ -1,5 +1,5 @@
 import pytest
-from src.matheus_passos_estufa_agrotech.app import *
+#from src.matheus_passos_estufa_agrotech.app import *
 import sys
 
 

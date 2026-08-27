@@ -1,0 +1,28 @@
+import pytest
+
+
+@pytest.mark.parametrize(
+        "base_price, is_vip, expected_price",
+        [
+            (100.0 , False, 100), 
+        ],
+        )
+def test_deposit_module(create_bank_acc): #Tests the deposit method.
+    pass
+
+
+@pytest.mark.parametrize(
+        "current_value",
+        [
+            (100.0),
+            (0.0),
+            (-200.0) 
+        ],
+        )
+def test_get_bank_balance(create_bank_acc, current_value):
+    create_bank_acc.saldo = current_value
+    assert create_bank_acc.saldo == current_value
+
+
+
+#def test_withdraw_money()
