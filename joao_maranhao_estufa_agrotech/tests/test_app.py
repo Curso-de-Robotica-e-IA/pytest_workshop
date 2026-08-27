@@ -19,7 +19,7 @@ MOCK_BASE_PRECO_NEGATIVO = [-15, -10]
         )
     ],
     ids=[f"temp_{i}" for i in MOCK_INPUT_STATUS_TEMPERATURA])
-def teste_status_temperatura(mock, input, expected):
+def test_status_temperatura(mock, input, expected):
     """
         Testagem da alteração dinâmica das respostas de leitura de temperatura 
         em tempo de execução para testar cenários de emergência (Geada 
@@ -45,7 +45,7 @@ def teste_status_temperatura(mock, input, expected):
         (15, False, 15),
     ],
 )
-def teste_calcula_preco_insumo(mock, preco_base, eh_vip, preco_esperado):
+def test_calcula_preco_insumo(mock, preco_base, eh_vip, preco_esperado):
     """
         Teste de retorno de preço com base em diferentes clientes, VIPs ou Não.
 
@@ -60,7 +60,7 @@ def teste_calcula_preco_insumo(mock, preco_base, eh_vip, preco_esperado):
 
 # 3 AB
 @pytest.mark.parametrize("preco_base", MOCK_BASE_PRECO_NEGATIVO)
-def teste_preco_negativo(mock, preco_base, eh_vip=True):
+def test_preco_negativo(mock, preco_base, eh_vip=True):
     """
         Teste de rejeição de preço negativo ao calcular preço de insumo.
 
@@ -73,16 +73,16 @@ def teste_preco_negativo(mock, preco_base, eh_vip=True):
 
 # 4 A
 @pytest.mark.skip(reason="Operação avançada ainda em desenvolvimento")
-def teste_estabilizar_temperatura(est,temperatura_alvo):
+def test_estabilizar_temperatura(est,temperatura_alvo):
     est.estabilizar_temperatura(temperatura_alvo)
 
 # 4 B
 
 @pytest.mark.skipif(sys.platform != "linux", reason="Requer sistema Linux")
-def teste_apenas_no_linux():
+def test_apenas_no_linux():
     assert True
 
 # 4 C
 @pytest.mark.xfail(reason="String ao invés de número")
-def teste_input_processar_carga_insumo(mock):
+def test_input_processar_carga_insumo(mock):
     assert mock.processar_carga_insumo("12") == 12

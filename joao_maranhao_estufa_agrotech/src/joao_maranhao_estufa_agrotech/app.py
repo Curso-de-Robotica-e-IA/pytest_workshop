@@ -1,6 +1,3 @@
-import os
-
-
 class ServicoLogger:
     """Serviço responsável pelo registro de logs do sistema em arquivo."""
 
