@@ -191,3 +191,32 @@ def test_discount_calculation(base_value, percent, expected):
             calcular_desconto(base_value, percent)
         
 
+@pytest.mark.xfail(reason = "I cannot hardcode a value, because the current value changes in real time")
+def test_dollar_exchage_value():
+    assert buscar_cotacao_dolar() == 5.0
+    
+
+
+@pytest.mark.xfail(reason = "I cannot hardcode a value, because the current value changes in real time")
+def test_exchange_reais_to_dollars():
+    assert converter_reais_para_dolar(5) == 1
+    
+
+@pytest.mark.xfail(reason = "Current code does not protect against negative value in base value and percent.")
+@pytest.mark.parametrize(
+        "base_value, percent, time, expected",
+        [
+            (1000, 20, 3, 1728),
+            (1000, 20, 0, 1000),
+            (1000, 20, -3, None),
+            #Should test with negative values in percent and in percent. But code does not cover it.
+            (-1000, 20, 3, 1728)
+        ],
+        )
+def test_compoud_interests(base_value, percent, time, expected):
+    if expected != None:
+        assert calcular_juros_composto(base_value, percent, time)
+    else:
+        with pytest.raises(ValorInvalidoError):
+            calcular_juros_composto(base_value, percent, time)
+    
