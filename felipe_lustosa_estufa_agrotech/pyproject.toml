@@ -8,6 +8,7 @@ packages = [{include = "felipe_lustosa_estufa_agrotech", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+requests = "^2.34.2"
 
 
 [tool.poetry.group.dev.dependencies]
