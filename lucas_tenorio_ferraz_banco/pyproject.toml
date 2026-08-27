@@ -1,0 +1,19 @@
+[project]
+name = "lucas-tenorio-ferraz-banco"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Lucas Tenorio",email = "ltf@softex.cin.ufpe.br"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "requests (>=2.34.2,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "lucas_tenorio_ferraz_banco", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
