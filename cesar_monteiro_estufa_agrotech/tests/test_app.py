@@ -1,5 +1,7 @@
 from platform import system
 
+from cesar_monteiro_estufa_agrotech.src.cesar_monteiro_estufa_agrotech.app import EstufaAgrotech
+
 import pytest
 import sys
 
@@ -90,3 +92,5 @@ def test_processar_carga_insumo(estufa):
     """Testa a função de processamento de carga de insumo"""
     with pytest.raises(ValueError):
         estufa.processar_carga_insumo(-10000)
+        
+        
